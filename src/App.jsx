@@ -8,6 +8,9 @@ import WelcomeNavBar from "./components/WelcomeNavBar";
 import NavBar from "./components/NavBar";
 import Home from "./pages/Home";
 import Favorites from "./pages/Favorites";
+import RecipeDetails from "./pages/RecipeDetails";
+import AddRecipe from "./pages/AddRecipe";
+import NewRecipes from "./pages/NewRecipe";
 
 function App() {
   const location = useLocation();
@@ -16,15 +19,22 @@ function App() {
 
   return (
     <>
-
       {isWelcomePage ? <WelcomeNavBar /> : <NavBar />}
+      
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/home" element={<Home />}/>
-        <Route path="/favorites" element={< Favorites/>}/>
+        <Route path="/home" element={<Home />} />
+        <Route path="/favorites" element={<Favorites />} />
+        <Route path="/recipe/:id" element={<RecipeDetails />} />
+        <Route path="/add-recipe" element={<AddRecipe />}/>
+        <Route path="/new-recipe" element={<NewRecipes />}/>
+
+        {/* Add a fallback route for unknown paths */}
+        <Route path="*" element={<div>Page Not Found</div>} />
       </Routes>
+      
       <Footer />
     </>
   );

@@ -4,10 +4,10 @@ import RecipeCard from '../components/RecipeCard';
 const Favorites = () => {
   const [favorites, setFavorites] = useState([]);
 
-  useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem('favorites')) || [];
-    setFavorites(stored);
-  }, []);
+//   useEffect(() => {
+//     const stored = JSON.parse(localStorage.getItem('favorites')) || [];
+//     setFavorites(stored);
+//   }, []);
 
   const handleRemove = (idMeal) => {
     const updated = favorites.filter(recipe => recipe.idMeal !== idMeal);
@@ -30,7 +30,7 @@ const Favorites = () => {
           <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
             {favorites.map((recipe) => (
               <RecipeCard
-                key={recipe.id}
+                key={recipe.idMeal || recipe.id}
                 recipe={recipe}
                 isFavoritePage={true}  // Flag to show this is the favorites page
                 onDelete={handleRemove}  // Prop to handle deletion from favorites

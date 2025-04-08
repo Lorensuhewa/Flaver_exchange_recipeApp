@@ -9,7 +9,7 @@ const Home = () => {
     const [searchQuery, setSearchQuery] = useState(''); //search
 
     const user = JSON.parse(localStorage.getItem('user'));
-
+    
     const mealSearchUrl = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
     const mockApiUrl = 'https://67f261cbec56ec1a36d2f2f3.mockapi.io/recipes';
 

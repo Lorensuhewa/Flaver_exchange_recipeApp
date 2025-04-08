@@ -6,20 +6,22 @@ const RecipeCard = ({ recipe, onDelete }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const navigate = useNavigate();
 
-//   useEffect(() => {
-//     const storedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
-//     const found = storedFavorites.some(item => item.id === recipe.idMeal);
-//     setIsFavorite(found);
-//   }, [recipe.idMeal]);
+  useEffect(() => {
+    const storedFavorites = JSON.parse(localStorage.getItem('localRecipe')) || [];
+    const found = storedFavorites.some(item => item.id === recipe.idMeal);
+    setIsFavorite(found);
+  }, [recipe.idMeal]);
 
   const toggleFavorite = () => {
     const storedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
     if (isFavorite) {
       const updated = storedFavorites.filter(item => item.id !== recipe.idMeal);
       localStorage.setItem('favorites', JSON.stringify(updated));
       setIsFavorite(false);
     } else {
-      localStorage.setItem('favorites', JSON.stringify([...storedFavorites, recipe]));
+      const updatedFavorites = [...storedFavorites, recipe];
+      localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
       setIsFavorite(true);
     }
   };

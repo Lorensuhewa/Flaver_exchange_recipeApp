@@ -38,7 +38,7 @@ const NavBar = () => {
           <DarkModeToggle />
           <Link to="/home" className="hover:text-pink-400 transition font-medium">Home</Link>
           <Link to="/favorites" className="hover:text-pink-400 transition font-medium">Favorites</Link>
-          <Link to="/add" className="hover:text-pink-400 transition font-medium">Add Recipe</Link>
+          <Link to="/add-recipe" className="hover:text-pink-400 transition font-medium">Add Recipe</Link>
           <Link to="/new-recipes" className="hover:text-pink-400 transition font-medium">New Recipes</Link>
           <button onClick={handleLogout} className="hover:text-pink-400 transition font-medium pr-2">Logout</button>
         </div>
