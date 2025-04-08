@@ -73,9 +73,9 @@ const Home = () => {
     return (
         <>
             {/* Banner Section */}
-            <section id="home" className="bg-white text-center dark:bg-gray-900">
+            <section id="home" className="bg-white text-center dark:bg-gray-900 mt-10">
                 <div
-                    className="relative w-full h-[50vh] bg-cover bg-center z-0"
+                    className="relative w-full h-[50vh] bg-cover bg-center z-0 pt-10"
                     style={{ backgroundImage: `url(${BannerHome})` }}
                 >
                     <div className="flex justify-center items-center text-white bg-gradient-to-tr from-black to-transparent opacity-100 w-full h-full dark:bg-black dark:opacity-90">
@@ -89,11 +89,11 @@ const Home = () => {
                                     <div className='flex items-start justify-center mr-40 pt-10'>
                                         <h1 className="text-6xl font-bold -mr-10 dark:text-gray-400">Welcome to</h1>
                                         <p className="flex flex-col text-outline">
-                                            <span className="text-8xl text-purple-500 font-extrabold dark:text-purple-900">Flavor</span>
+                                            <span className="text-8xl text-purple-800 font-extrabold dark:text-purple-900">Flavor</span>
                                             <span className="text-8xl text-green-800 font-extrabold dark:text-green-900">Exchange</span>
                                         </p>
                                     </div>
-                                    <div className='flex items-center font-bold justify-center dark:text-gray-400'>
+                                    <div className='flex items-center text-white font-bold justify-center dark:text-gray-400'>
                                         <h1 className="text-3xl font-serif pt-10 pr-5">Recipe Sharing Platform</h1>
                                         <h2 className="text-3xl font-serif pt-10">Discover, Share, and Enjoy Recipes</h2>
                                     </div>
