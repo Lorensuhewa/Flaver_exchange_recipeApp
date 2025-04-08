@@ -6,6 +6,8 @@ import Signup from "./components/Signup";
 import Welcome from "./pages/Welcome";
 import WelcomeNavBar from "./components/WelcomeNavBar";
 import NavBar from "./components/NavBar";
+import Home from "./pages/Home";
+import Favorites from "./pages/Favorites";
 
 function App() {
   const location = useLocation();
@@ -20,6 +22,8 @@ function App() {
         <Route path="/" element={<Welcome />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/home" element={<Home />}/>
+        <Route path="/favorites" element={< Favorites/>}/>
       </Routes>
       <Footer />
     </>
