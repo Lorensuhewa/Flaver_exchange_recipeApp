@@ -9,20 +9,25 @@ const Signup = () => {
     const navigate = useNavigate();
 
     const handleSignup = () => {
-        // Check if the user already exists in localStorage
-        const existingUser = JSON.parse(localStorage.getItem('user'));
-
-        if (existingUser) {
+        // Check if the user already exists in localStorage (under 'registeredUser')
+        const existingUser = JSON.parse(localStorage.getItem('registeredUser'));
+    
+        if (existingUser && existingUser.username === username) {
             setError('User already exists');
             return;
         }
-
+    
         // Store new user data in localStorage
         const newUser = { username, password, savedRecipes: [] };
         localStorage.setItem('registeredUser', JSON.stringify(newUser));
-        console.log("user added");
+        console.log("User registered successfully");
+    
+        // Optionally, store the user as the logged-in user
+        localStorage.setItem('user', JSON.stringify(newUser));
+    
         navigate('/login');
     };
+    
 
     return (
         <div className="flex items-center bg-gray-100 dark:bg-gray-700 mt-20">
