@@ -41,7 +41,7 @@ const Welcome = () => {
     return (
         <>
             {/* Hero Section */}
-            <section id='home' className="text-center">
+            <section id='home' className="text-center ">
                 <div className="relative w-full h-screen bg-cover bg-center z-0" style={{ backgroundImage: `url(${Banner})` }}>
                     {/* Text overlay with gradient */}
                     <div className="flex flex-col justify-center items-start text-white bg-gradient-to-tr from-black to-transparent opacity-80 w-full h-full">
