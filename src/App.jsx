@@ -30,7 +30,7 @@ function App() {
           <Route path="/favorites" element={<Favorites />} />
           <Route path="/recipe/:id" element={<RecipeDetails />} />
           <Route path="/add-recipe" element={<AddRecipe />}/>
-          <Route path="/new-recipe" element={<NewRecipes />}/>
+          <Route path="/new-recipes" element={<NewRecipes />}/>
           <Route path="/edit/:id" element={<EditRecipe/>}/>
 
           {/* Add a fallback route for unknown paths */}
