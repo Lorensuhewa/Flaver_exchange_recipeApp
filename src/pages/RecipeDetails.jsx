@@ -5,7 +5,6 @@ const RecipeDetails = () => {
     const location = useLocation();
     const { id } = useParams();
     const [recipe, setRecipe] = useState(null);
-    const [recipes, setRecipes] = useState(null);
     const [isFavorite, setIsFavorite] = useState(false);
     const [timeLeft, setTimeLeft] = useState(null);
     const [timerActive, setTimerActive] = useState(false);
@@ -21,8 +20,25 @@ const RecipeDetails = () => {
             return;
         }
 
+        const fetchLocalRecipe = () => {
+            const localRecipes = JSON.parse(localStorage.getItem('localRecipes')) || [];
+            const localRecipe = localRecipes.find(r => r.id === id);
+
+            if (localRecipe) {
+                setRecipe(localRecipe);
+                setLoading(false);
+                return true;
+            }
+
+            return false;
+        };
+
+        // Check for local recipe first
+        if (fetchLocalRecipe()) return;
+
+        // Fetch recipe from the API if not a local recipe
         console.log("Fetching data for recipe ID:", id); // Log the ID
-    
+        
         fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
             .then((res) => res.json())
             .then((data) => {
@@ -42,7 +58,6 @@ const RecipeDetails = () => {
                 setLoading(false);
             });
     }, [id]);
-
 
     const toggleFavorite = () => {
         const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
@@ -110,11 +125,11 @@ const RecipeDetails = () => {
 
                 <div className="text-center mb-10">
                     <h1 className="text-4xl font-extrabold mb-4 text-gray-900 dark:text-white">
-                        {recipe?.strMeal}
+                        {recipe?.title || recipe?.strMeal}
                     </h1>
                     <img
-                        src={recipe?.strMealThumb}
-                        alt={recipe?.strMeal}
+                        src={recipe?.image || recipe?.strMealThumb}
+                        alt={recipe?.title || recipe?.strMeal}
                         className="rounded-xl mx-auto shadow-xl mb-4 w-3/4 md:w-1/2"
                     />
                     <p className="text-lg text-gray-600 dark:text-gray-300">
@@ -149,82 +164,32 @@ const RecipeDetails = () => {
                     )}
                 </section>
 
-                <section className="mb-10">
-                    <h2 className="text-2xl font-semibold mb-4 text-center bg-gray-200 dark:bg-gray-700 p-3 rounded-xl w-fit mx-auto">
-                        📱 Share This Recipe
-                    </h2>
-                    <div className="flex justify-center space-x-4">
-                        <button className="bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-700">
-                            Share on Facebook
-                        </button>
-                        <button className="bg-blue-400 text-white px-4 py-2 rounded-xl hover:bg-blue-500">
-                            Share on Twitter
-                        </button>
-                        <button className="bg-pink-500 text-white px-4 py-2 rounded-xl hover:bg-pink-600">
-                            Share on Pinterest
-                        </button>
-                    </div>
-                </section>
-
+                {/* Ingredients and Instructions */}
                 <section className="mb-10">
                     <h2 className="text-2xl font-semibold mb-4 text-center bg-gray-200 dark:bg-gray-700 p-3 rounded-xl w-fit mx-auto">
                         🥕 Ingredients
                     </h2>
                     <ul className="list-disc list-inside space-y-2 text-lg">
-                        {recipe && recipe.isLocal ? (
-                            recipe?.ingredients?.length > 0 ? (
-                                recipe?.ingredients?.map((ingredient, i) => (
-                                    <li key={i} className="text-gray-800 dark:text-gray-200">{ingredient}</li>
-                                ))
-                            ) : (
-                                <li>No ingredients available</li>
-                            )
-                        ) : (
-                            Object.keys(recipe || {})
-                                .filter(key => key.startsWith("strIngredient") && recipe[key])
-                                .map((key, index) => {
-                                    const measure = recipe[`strMeasure${key.slice(13)}`] || '';
-                                    return (
-                                        <li key={index} className="text-gray-800 dark:text-gray-200">
-                                            {recipe[key]} - {measure}
-                                        </li>
-                                    );
-                                })
-                        )}
-                    </ul>
-
-                    {recipes && recipes.isLocal ? (
-                        recipes?.ingredients?.length > 0 ? (
-                            recipes?.ingredients?.map((ingredient, i) => (
+                        {recipe?.ingredients?.length > 0 ? (
+                            recipe?.ingredients?.map((ingredient, i) => (
                                 <li key={i} className="text-gray-800 dark:text-gray-200">{ingredient}</li>
                             ))
                         ) : (
                             <li>No ingredients available</li>
-                        )
-                    ) : (
-                        Object.keys(recipe || {})
-                            .filter(key => key.startsWith("ingredients") && recipe[key])
-                            .map((key, index) => {
-                                return (
-                                    <li key={index} className="text-gray-800 dark:text-gray-200">
-                                        {recipe[key]}
-                                    </li>
-                                );
-                            })
-                    )}
+                        )}
+                    </ul>
                 </section>
-
 
                 <section className="mb-10">
                     <h2 className="text-2xl font-semibold mb-4 text-center bg-gray-200 dark:bg-gray-700 p-3 rounded-xl w-fit mx-auto">
                         👨‍🍳 Instructions
                     </h2>
                     <div className="bg-gray-100 dark:bg-gray-800 p-5 rounded-xl whitespace-pre-line leading-relaxed shadow-md">
-                        {recipe.strInstructions || recipes.instructions}
+                        {recipe?.instructions || recipe?.strInstructions}
                     </div>
                 </section>
 
-                {recipe.strYoutube && (
+                {recipe?.strYoutube && (
                     <section className="mb-10 flex flex-col items-center">
                         <h2 className="text-2xl font-semibold mb-4 bg-gray-200 dark:bg-gray-700 p-3 rounded-xl w-fit mx-auto">
                             🎥 Watch the Video
