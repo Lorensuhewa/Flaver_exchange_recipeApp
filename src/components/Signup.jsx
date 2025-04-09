@@ -9,7 +9,7 @@ const Signup = () => {
     const navigate = useNavigate();
 
     const handleSignup = () => {
-        // Check if the user already exists in localStorage (under 'registeredUser')
+        // Check if the user already exists in localStorage 
         const existingUser = JSON.parse(localStorage.getItem('registeredUser'));
     
         if (existingUser && existingUser.username === username) {
@@ -22,13 +22,11 @@ const Signup = () => {
         localStorage.setItem('registeredUser', JSON.stringify(newUser));
         console.log("User registered successfully");
     
-        // Optionally, store the user as the logged-in user
         localStorage.setItem('user', JSON.stringify(newUser));
     
         navigate('/login');
     };
     
-
     return (
         <div className="flex items-center bg-gray-100 dark:bg-gray-700 mt-20">
 
