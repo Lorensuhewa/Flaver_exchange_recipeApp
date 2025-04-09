@@ -14,9 +14,8 @@ export const ThemeProvider = ({ children }) => {
             document.documentElement.classList.add('dark');
             localStorage.setItem('theme', 'dark');
         } else {
-            // If darkMode is false, remove the dark to light theme
             document.documentElement.classList.remove('dark');
-            // Store the selected theme as 'light'
+           
             localStorage.setItem('theme', 'light');
         }
     }, [darkMode]); 
@@ -24,7 +23,7 @@ export const ThemeProvider = ({ children }) => {
     return (
         // Provide the darkMode state and setDarkMode function to all children components
         <ThemeContext.Provider value={{ darkMode, setDarkMode }}>
-            {children} {/* Render the children components */}
+            {children} 
         </ThemeContext.Provider>
     );
 }

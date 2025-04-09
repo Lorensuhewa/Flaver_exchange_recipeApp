@@ -37,7 +37,7 @@ const RecipeDetails = () => {
             return false;
         };
 
-        
+
         if (fetchLocalRecipe()) return;
 
         // Fetch recipe from the API if not a local recipe
@@ -172,17 +172,20 @@ const RecipeDetails = () => {
                         🥕 Ingredients
                     </h2>
                     <ul className="list-disc list-inside space-y-2 text-lg">
-                        {recipe?.ingredients?.length > 0 ? (
-                            recipe?.ingredients?.map((ingredient, i) => (
-                                <li key={i} className="text-gray-800 dark:text-gray-200">{ingredient}</li>
-                            ))
-                        ) : (
-                            <li>No ingredients available</li>
-                        )}
+                        {Array.from({ length: 20 }, (_, i) => {
+                            const ingredient = recipe[`strIngredient${i + 1}`];
+                            const measure = recipe[`strMeasure${i + 1}`];
+                            return ingredient && ingredient.trim() !== '' ? (
+                                <li key={i} className="text-gray-800 dark:text-gray-200">
+                                     {ingredient} - {measure?.trim()}
+                                </li>
+                            ) : null;
+                        })}
                     </ul>
                 </section>
 
-                
+
+
                 <section className="mb-10">
                     <h2 className="text-2xl font-semibold mb-4 text-center bg-gray-200 dark:bg-gray-700 p-3 rounded-xl w-fit mx-auto">
                         👨‍🍳 Instructions

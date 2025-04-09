@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { FcSearch } from "react-icons/fc";
 
 const SearchSection = () => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -28,6 +29,7 @@ const SearchSection = () => {
                         type="submit"
                         className="bg-pink-500 hover:bg-pink-600 text-white py-3 px-6 rounded-full focus:outline-none focus:ring-2 focus:ring-pink-500 dark:focus:ring-pink-400"
                     >
+                        <FcSearch className='size-5' />
                         Search
                     </button>
                 </form>

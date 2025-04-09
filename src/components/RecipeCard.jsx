@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { BsFacebook, BsPinterest, BsTwitterX, BsWhatsapp } from "react-icons/bs";
+import RatingsImg from '../assets/fiveStar.png';
+import { FcInspection, FcSearch } from "react-icons/fc";
+import { AiFillDelete } from "react-icons/ai";
 
 const RecipeCard = ({ recipe, onDelete }) => {
   const recipeId = recipe.id || recipe.idMeal; // Get recipe ID, id / idMeal
 
-  const [isFavorite, setIsFavorite] = useState(false); 
+  const [isFavorite, setIsFavorite] = useState(false);
   const navigate = useNavigate(); // For navigation within the app
 
   useEffect(() => {
@@ -13,7 +16,7 @@ const RecipeCard = ({ recipe, onDelete }) => {
     const storedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
     const found = storedFavorites.some(item => item.id === recipeId); // Check if the recipe is marked as favorite
     setIsFavorite(found); // Update based on the result
-  }, [recipeId]); 
+  }, [recipeId]);
 
   // Toggle the favorite state
   const toggleFavorite = () => {
@@ -35,9 +38,9 @@ const RecipeCard = ({ recipe, onDelete }) => {
   // Handle deleting the recipe
   const handleDelete = () => {
     const storedRecipes = JSON.parse(localStorage.getItem('localRecipes')) || [];
-    const updated = storedRecipes.filter(r => r.id !== recipeId); 
+    const updated = storedRecipes.filter(r => r.id !== recipeId);
     localStorage.setItem('localRecipes', JSON.stringify(updated)); // Update localStorage
-    onDelete(recipeId); 
+    onDelete(recipeId);
   };
 
   // Handle sharing the recipe via different platforms
@@ -70,7 +73,7 @@ const RecipeCard = ({ recipe, onDelete }) => {
   return (
     <div className="bg-gray-100 dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl dark:shadow-gray-700 overflow-hidden transition-transform transform hover:scale-105">
       <img src={recipe.image} alt={recipe.title} className="w-full h-48 object-cover" />
-      <div className="flex flex-col p-4">
+      <div className="flex flex-col px-6 py-4"> {/* Adjusted padding for more space */}
         {/* Recipe Title */}
         <h3 className="text-lg font-bold mb-2 text-gray-800 dark:text-white">
           {recipe.title}
@@ -80,7 +83,12 @@ const RecipeCard = ({ recipe, onDelete }) => {
         <ul className="list-disc list-inside mb-3 text-sm text-gray-600 dark:text-gray-300">
           <li>Cooking Time: <b>{recipe.cookingTime} mins</b></li>
           <li>{recipe.category || recipe.strCategory} - {recipe.area || recipe.strArea}</li>
-          <li>Rating: <b>{recipe.rating} %</b> ⭐</li>
+          <div className="flex items-center space-x-2">
+            <li className="list-none">
+              Rating: <b>{recipe.rating} %</b>
+            </li>
+            <img src={RatingsImg} alt="Rating stars" className="w-24 h-auto mt-1" />
+          </div>
         </ul>
 
         {/* Link to Recipe Details */}
@@ -89,36 +97,49 @@ const RecipeCard = ({ recipe, onDelete }) => {
           state={{ cookingTime: recipe.cookingTime }}
           className="text-purple-600 dark:text-purple-400 text-sm mb-3 hover:underline text-center"
         >
-          🔍 View more Details
+          <div className='flex items-center justify-center gap-2 my-5'>
+            <FcSearch className='size-5' />
+            <h1>View more Details</h1>
+          </div>
         </Link>
 
         {/* Add to Favorites / Remove from Favorites Button */}
         <div className="flex justify-center items-center mb-4">
           <button
             onClick={toggleFavorite}
-            className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors ${isFavorite
+            className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors border-2 ${isFavorite
               ? 'bg-red-500 text-white hover:bg-red-600 dark:bg-red-800 dark:hover:bg-red-700'
               : 'bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600'
               }`}
           >
-            {isFavorite ? '💖 Remove from Favorites' : '🤍 Add to Favorites'}
+            {isFavorite ? ' Remove from Favorites' : 'Add to Favorites'}
           </button>
         </div>
 
         {/* Edit and Delete buttons (Only for local recipes) */}
         {recipe.isLocal && (
-          <div className="flex justify-between items-center mt-4 gap-3">
+          <div className="flex justify-center items-center mt-4 gap-10">
             <button
-              className="bg-yellow-400 text-gray-950 px-3 py-1 rounded hover:bg-yellow-500 text-sm transition dark:bg-yellow-800"
+              className="bg-yellow-400 text-gray-950 px-5 py-1 rounded hover:bg-yellow-500 text-sm transition dark:bg-yellow-800"
               onClick={() => navigate(`/edit/${recipe.id}`)} // Navigate to the edit page for the recipe
             >
-              ✏️ Edit
+              <div className="flex items-center  py-2 ">
+                <FcInspection className='size-6' />
+                <h1 className='text-2xl font-bold'>
+                  Edit
+                </h1>
+              </div>
             </button>
             <button
               className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 text-sm transition dark:bg-red-800"
               onClick={handleDelete} // Delete the recipe from localStorage
             >
-              🗑️ Delete
+              <div className="flex items-center py-2">
+                <AiFillDelete className='size-6' />
+                <h1 className='text-2xl font-bold'>
+                  Delete
+                </h1>
+              </div>
             </button>
           </div>
         )}
@@ -153,7 +174,9 @@ const RecipeCard = ({ recipe, onDelete }) => {
         </div>
       </div>
     </div>
+
   );
 };
 
 export default RecipeCard;
+

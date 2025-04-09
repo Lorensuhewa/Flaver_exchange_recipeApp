@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import RecipeCard from '../components/RecipeCard';
 import BannerHome from '../assets/BannerHome.png';
 import LoginBG from '../assets/login.png';
+import { IoFastFoodSharp } from "react-icons/io5";
 
 const Home = () => {
     // State to store all recipes and filtered recipes based on search query
@@ -122,9 +123,12 @@ const Home = () => {
             <div className="dark:bg-gray-950 bg-gradient-to-b bg-pink-300 to-white sm:px-6 lg:px-12 py-10">
                 <div className="max-w-screen-xl mx-auto">
                     <div className="text-center mb-10">
-                        <h1 className="text-4xl font-bold text-gray-800 dark:text-white mb-4">
-                            🍽️ Explore Delicious Recipes
-                        </h1>
+                        <div className='flex items-center justify-center gap-5'>
+                            <IoFastFoodSharp className='size-16 text-orange-800 dark:text-yellow-500'/>
+                            <h1 className="text-4xl font-bold text-gray-800 dark:text-white mb-4">
+                                Explore Delicious Recipes
+                            </h1>
+                        </div>
                         <p className="text-gray-600 dark:text-gray-400 text-lg">
                             Discover dishes from around the world and find your next favorite meal.
                         </p>
@@ -147,7 +151,7 @@ const Home = () => {
                             ))
                         ) : (
                             <div className="col-span-full text-center text-gray-500 dark:text-gray-400 text-lg mt-10">
-                                No recipes found or wait untill fetching data 🍳
+                                No recipes found or wait untill fetching data 
                             </div>
                         )}
                     </div>
@@ -158,3 +162,4 @@ const Home = () => {
 };
 
 export default Home;
+
