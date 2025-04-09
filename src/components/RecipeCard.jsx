@@ -3,20 +3,22 @@ import { Link, useNavigate } from 'react-router-dom';
 import { BsFacebook, BsPinterest, BsTwitterX, BsWhatsapp } from "react-icons/bs";
 
 const RecipeCard = ({ recipe, onDelete }) => {
+  const recipeId = recipe.id || recipe.idMeal;
+
   const [isFavorite, setIsFavorite] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const storedFavorites = JSON.parse(localStorage.getItem('localRecipe')) || [];
-    const found = storedFavorites.some(item => item.id === recipe.idMeal);
+    const found = storedFavorites.some(item => item.id === recipeId);
     setIsFavorite(found);
-  }, [recipe.idMeal]);
+  }, [recipeId]);
 
   const toggleFavorite = () => {
     const storedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
     if (isFavorite) {
-      const updated = storedFavorites.filter(item => item.id !== recipe.idMeal);
+      const updated = storedFavorites.filter(item => item.id !== recipeId);
       localStorage.setItem('favorites', JSON.stringify(updated));
       setIsFavorite(false);
     } else {
@@ -28,9 +30,9 @@ const RecipeCard = ({ recipe, onDelete }) => {
 
   const handleDelete = () => {
     const storedRecipes = JSON.parse(localStorage.getItem('localRecipes')) || [];
-    const updated = storedRecipes.filter(r => r.id !== recipe.idMeal);
+    const updated = storedRecipes.filter(r => r.id !== recipeId);
     localStorage.setItem('localRecipes', JSON.stringify(updated));
-    onDelete(recipe.idMeal);
+    onDelete(recipeId);
   };
 
   const handleShare = (platform) => {
@@ -72,7 +74,7 @@ const RecipeCard = ({ recipe, onDelete }) => {
         </ul>
 
         <Link
-          to={`/recipe/${recipe.id}`}
+          to={`/recipe/${recipeId}`}
           state={{ cookingTime: recipe.cookingTime }}
           className="text-purple-600 dark:text-purple-400 text-sm mb-3 hover:underline text-center"
         >
