@@ -4,13 +4,14 @@ import RecipeCard from '../components/RecipeCard';
 const Favorites = () => {
   const [favorites, setFavorites] = useState([]);
 
+  // Load favorites from localStorage when the component mounts
   useEffect(() => {
-    // Load favorites from localStorage when the page loads
     const storedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
     setFavorites(storedFavorites);
   }, []);
 
   const handleRemove = (idMeal) => {
+    // Remove recipe from favorites and update state & localStorage
     const updatedFavorites = favorites.filter(recipe => recipe.idMeal !== idMeal);
     setFavorites(updatedFavorites);
     localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
@@ -23,11 +24,13 @@ const Favorites = () => {
           💖 My Favorite Recipes
         </h1>
 
+        {/* Display a message if there are no favorites */}
         {favorites.length === 0 ? (
           <p className="text-center text-lg text-gray-500 dark:text-gray-400 mt-20">
             No favorites yet. Start exploring and add some! 🌟
           </p>
         ) : (
+          // Display favorite recipes using RecipeCard component
           <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
             {favorites.map((recipe) => (
               <RecipeCard

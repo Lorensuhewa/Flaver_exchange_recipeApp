@@ -23,7 +23,7 @@ const Login = () => {
             registeredUser.username === username &&
             registeredUser.password === password
         ) {
-            localStorage.setItem('user', JSON.stringify(registeredUser)); // ✅ Login session
+            localStorage.setItem('user', JSON.stringify(registeredUser)); // Login session
             navigate('/home');
         } else {
             setError('Invalid username or password');

@@ -5,7 +5,7 @@ const SearchSection = () => {
 
     const handleSearch = (e) => {
         e.preventDefault();
-        // You can add functionality here to handle the search (e.g., filtering recipes, etc.)
+        // functionality  to handle the search 
         console.log('Searching for:', searchQuery);
     };
 
