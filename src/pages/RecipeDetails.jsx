@@ -8,10 +8,13 @@ const RecipeDetails = () => {
     const [isFavorite, setIsFavorite] = useState(false);
     const [timeLeft, setTimeLeft] = useState(null);
     const [timerActive, setTimerActive] = useState(false);
-    const [cookingTime, setCookingTime] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const timerRef = useRef(null);
+
+    const timerRef = useRef(null); // store the timer
+
+    // Get cookingTime from state passed by the RecipeCard component
+    const { cookingTime: initialCookingTime } = location.state || {};
 
     useEffect(() => {
         if (!id) {
@@ -20,6 +23,7 @@ const RecipeDetails = () => {
             return;
         }
 
+        // Check for local recipe first
         const fetchLocalRecipe = () => {
             const localRecipes = JSON.parse(localStorage.getItem('localRecipes')) || [];
             const localRecipe = localRecipes.find(r => r.id === id);
@@ -33,17 +37,13 @@ const RecipeDetails = () => {
             return false;
         };
 
-        // Check for local recipe first
+        
         if (fetchLocalRecipe()) return;
 
         // Fetch recipe from the API if not a local recipe
-        console.log("Fetching data for recipe ID:", id); // Log the ID
-        
         fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
             .then((res) => res.json())
             .then((data) => {
-                console.log("API response:", data); // Log the API response
-               
                 if (data.meals && data.meals.length > 0) {
                     setRecipe(data.meals[0]);
                 } else {
@@ -59,6 +59,12 @@ const RecipeDetails = () => {
             });
     }, [id]);
 
+    useEffect(() => {
+        if (recipe && initialCookingTime) {
+            setTimeLeft(initialCookingTime * 60); // Initialize the timer with the cooking time
+        }
+    }, [recipe, initialCookingTime]);
+
     const toggleFavorite = () => {
         const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
         if (isFavorite) {
@@ -73,9 +79,7 @@ const RecipeDetails = () => {
 
     const startTimer = () => {
         setTimerActive(true);
-        const timeInSeconds = cookingTime * 60;
-        setTimeLeft(timeInSeconds);
-        let remainingTime = timeInSeconds;
+        let remainingTime = timeLeft;
 
         const timer = setInterval(() => {
             remainingTime -= 1;
@@ -89,7 +93,7 @@ const RecipeDetails = () => {
     };
 
     const stopTimer = () => {
-        clearInterval(timer);
+        clearInterval(timerRef.current);
         setTimerActive(false);
     };
 
@@ -138,14 +142,12 @@ const RecipeDetails = () => {
                 </div>
 
                 {/* Timer and other sections */}
-
-                {/* Example for timer */}
                 <section className="mb-10 text-center">
                     <h2 className="text-2xl font-semibold mb-4 bg-gray-200 dark:bg-gray-700 p-3 rounded-xl w-fit mx-auto">
                         ⏲️ Cooking Timer
                     </h2>
                     <p className="text-lg">
-                        Time Left: {timeLeft !== null ? formatTime(timeLeft) : cookingTime + " min"}
+                        Time Left: {timeLeft !== null ? formatTime(timeLeft) : initialCookingTime + " min"}
                     </p>
                     {!timerActive ? (
                         <button
@@ -180,6 +182,7 @@ const RecipeDetails = () => {
                     </ul>
                 </section>
 
+                
                 <section className="mb-10">
                     <h2 className="text-2xl font-semibold mb-4 text-center bg-gray-200 dark:bg-gray-700 p-3 rounded-xl w-fit mx-auto">
                         👨‍🍳 Instructions
@@ -189,6 +192,7 @@ const RecipeDetails = () => {
                     </div>
                 </section>
 
+                {/* This part is only working when the youtube link or video is avalable */}
                 {recipe?.strYoutube && (
                     <section className="mb-10 flex flex-col items-center">
                         <h2 className="text-2xl font-semibold mb-4 bg-gray-200 dark:bg-gray-700 p-3 rounded-xl w-fit mx-auto">
