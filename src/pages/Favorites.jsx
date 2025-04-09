@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import RecipeCard from '../components/RecipeCard';
 
 const Favorites = () => {
   const [favorites, setFavorites] = useState([]);
 
+  useEffect(() => {
+    // Load favorites from localStorage when the page loads
+    const storedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    setFavorites(storedFavorites);
+  }, []);
+
   const handleRemove = (idMeal) => {
-    const updated = favorites.filter(recipe => recipe.idMeal !== idMeal);
-    setFavorites(updated);
-    localStorage.setItem('favorites', JSON.stringify(updated));
+    const updatedFavorites = favorites.filter(recipe => recipe.idMeal !== idMeal);
+    setFavorites(updatedFavorites);
+    localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
   };
 
   return (
@@ -27,7 +33,6 @@ const Favorites = () => {
               <RecipeCard
                 key={recipe.idMeal || recipe.id}
                 recipe={recipe}
-                isFavoritePage={true}  
                 onDelete={handleRemove}  
               />
             ))}
