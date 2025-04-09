@@ -131,7 +131,7 @@ const Home = () => {
                             ))
                         ) : (
                             <div className="col-span-full text-center text-gray-500 dark:text-gray-400 text-lg mt-10">
-                                No recipes found 🍳
+                                No recipes found or wait untill fetching data 🍳
                             </div>
                         )}
                     </div>
