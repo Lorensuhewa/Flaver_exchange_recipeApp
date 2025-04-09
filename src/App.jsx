@@ -11,6 +11,7 @@ import Favorites from "./pages/Favorites";
 import RecipeDetails from "./pages/RecipeDetails";
 import AddRecipe from "./pages/AddRecipe";
 import NewRecipes from "./pages/NewRecipe";
+import EditRecipe from "./pages/EditRecipe";
 
 function App() {
   const location = useLocation();
@@ -22,17 +23,18 @@ function App() {
       {isWelcomePage ? <WelcomeNavBar /> : <NavBar />}
       
       <Routes>
-        <Route path="/" element={<Welcome />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/favorites" element={<Favorites />} />
-        <Route path="/recipe/:id" element={<RecipeDetails />} />
-        <Route path="/add-recipe" element={<AddRecipe />}/>
-        <Route path="/new-recipe" element={<NewRecipes />}/>
+          <Route path="/" element={<Welcome />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/favorites" element={<Favorites />} />
+          <Route path="/recipe/:id" element={<RecipeDetails />} />
+          <Route path="/add-recipe" element={<AddRecipe />}/>
+          <Route path="/new-recipe" element={<NewRecipes />}/>
+          <Route path="/edit/:id" element={<EditRecipe/>}/>
 
-        {/* Add a fallback route for unknown paths */}
-        <Route path="*" element={<div>Page Not Found</div>} />
+          {/* Add a fallback route for unknown paths */}
+          <Route path="*" element={<div>Page Not Found</div>} />
       </Routes>
       
       <Footer />

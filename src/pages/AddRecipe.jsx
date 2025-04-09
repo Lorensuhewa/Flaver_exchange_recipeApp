@@ -30,7 +30,7 @@ const AddRecipe = () => {
       rating: formData.rating,
       strCategory: formData.strCategory,
       strArea: formData.strArea,
-      isLocal: true // Mark it as a local recipe
+      isLocal: true //local recipe
     };
 
     const existing = JSON.parse(localStorage.getItem('localRecipes')) || [];
@@ -39,7 +39,7 @@ const AddRecipe = () => {
   };
 
   return (
-    <div className="bg-gray-100 dark:bg-gray-950 p-10 ">
+    <div className="bg-gray-100 dark:bg-gray-950 p-10 mt-20 ">
       <div className="max-w-3xl mx-auto p-8 bg-gray-200 dark:bg-[#1f2937] shadow-2xl rounded-2xl transition-colors duration-300">
         <h2 className="text-3xl font-bold text-center mb-8 text-gray-800 dark:text-white">📝 Add a New Recipe</h2>
         <form onSubmit={handleSubmit} className="space-y-6">

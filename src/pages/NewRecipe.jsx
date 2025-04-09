@@ -10,7 +10,7 @@ const NewRecipes = () => {
   }, []);
 
   return (
-    <div className="p-8 min-h-screen bg-white dark:bg-gray-950 transition-colors duration-300">
+    <div className="p-8 min-h-screen bg-white dark:bg-gray-950 transition-colors duration-300 mt-20">
       <h1 className="text-4xl font-bold mb-10 text-center text-gray-800 dark:text-gray-100">
         🍳 New Recipes
       </h1>

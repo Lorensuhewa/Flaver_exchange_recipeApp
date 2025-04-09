@@ -96,7 +96,7 @@ const RecipeDetails = () => {
     if (error) return <div className="text-center p-6 text-red-500 dark:text-red-400">{error}</div>;
 
     return (
-        <div className="bg-gray-100 dark:bg-gray-950 min-h-screen">
+        <div className="bg-gray-100 mt-20 dark:bg-gray-950 min-h-screen ">
             <div className="p-6 max-w-5xl mx-auto text-gray-800 dark:text-gray-100">
                 <div className="mb-6 flex justify-between items-center">
                     <Link
