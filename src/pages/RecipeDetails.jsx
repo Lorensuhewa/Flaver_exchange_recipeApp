@@ -43,14 +43,6 @@ const RecipeDetails = () => {
             });
     }, [id]);
 
-    // useEffect(() => {
-    //     // This effect should run only when recipe is set (i.e., not null)
-    //     if (recipe) {
-    //         const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
-    //         const found = storedFavorites.some((item) => item.idMeal === recipe.idMeal);
-    //         setIsFavorite(found);
-    //     }
-    // }, [recipe]);  // Make sure this runs only when recipe changes
 
     const toggleFavorite = () => {
         const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];

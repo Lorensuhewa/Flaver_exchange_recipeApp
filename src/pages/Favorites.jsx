@@ -1,20 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import RecipeCard from '../components/RecipeCard';
 
 const Favorites = () => {
-  // const {id} = useParams();
   const [favorites, setFavorites] = useState([]);
-
-  // useEffect(() => {
-  //     const stored = JSON.parse(localStorage.getItem('localRecipes')) || [];
-  //     const found = stored.find(r => r.id === id);
-  //     if (found) {
-  //       setFavorites(found);
-  //     } else {
-  //       alert('Recipe not found');
-  //       navigate('/');
-  //     }
-  //   }, [id, navigate]);
 
   const handleRemove = (idMeal) => {
     const updated = favorites.filter(recipe => recipe.idMeal !== idMeal);
@@ -39,8 +27,8 @@ const Favorites = () => {
               <RecipeCard
                 key={recipe.idMeal || recipe.id}
                 recipe={recipe}
-                isFavoritePage={true}  // Flag to show this is the favorites page
-                onDelete={handleRemove}  // Prop to handle deletion from favorites
+                isFavoritePage={true}  
+                onDelete={handleRemove}  
               />
             ))}
           </div>
