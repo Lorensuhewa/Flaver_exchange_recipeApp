@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FcAddDatabase } from "react-icons/fc";
 
 const AddRecipe = () => {
   const navigate = useNavigate();
-  
+
   // State to manage form data
   const [formData, setFormData] = useState({
     title: '',
@@ -45,7 +46,7 @@ const AddRecipe = () => {
     // Save the new recipe to localStorage
     localStorage.setItem('localRecipes', JSON.stringify([...existing, recipe]));
 
-    
+
     navigate('/home');
   };
 
@@ -53,7 +54,7 @@ const AddRecipe = () => {
     <div className="bg-gray-100 dark:bg-gray-950 p-10 mt-20 ">
       <div className="max-w-3xl mx-auto p-8 bg-gray-200 dark:bg-[#1f2937] shadow-2xl rounded-2xl transition-colors duration-300">
         <h2 className="text-3xl font-bold text-center mb-8 text-gray-800 dark:text-white">📝 Add a New Recipe</h2>
-        
+
         {/* Form for adding a new recipe */}
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
@@ -123,7 +124,13 @@ const AddRecipe = () => {
           <div className="text-center">
             <button type="submit"
               className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded-xl transition duration-200">
-              ➕ Add Recipe
+              <div className='flex items-center justify-center gap-2 '>
+                <FcAddDatabase className='size-5 ' />
+                <h1>
+                  Add Recipe
+                </h1>
+              </div>
+
             </button>
           </div>
         </form>
